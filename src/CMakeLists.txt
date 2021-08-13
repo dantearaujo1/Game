@@ -1,7 +1,14 @@
-set(MANAGER_DIRS ${PROJECT_SOURCE_DIR}/src/Managers/})
+set(MANAGER_DIRS ${PROJECT_SOURCE_DIR}/src/Managers})
 set(SCENES_DIRS ${PROJECT_SOURCE_DIR}/src/Scenes/})
 
-add_executable(${PROJECT_NAME} main.cpp Game.cpp)
+add_executable(${PROJECT_NAME}
+    main.cpp
+    Game.cpp
+    ${MANAGER_DIRS}/SceneManager.cpp
+    ${SCENES_DIRS}/GameScene.cpp
+    ${SCENES_DIRS}/MenuScene.cpp
+    )
+
 set(EXECUTABLE_NAME "Dante")
 
 add_subdirectory(Managers)
@@ -27,5 +34,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 )
 
 target_include_directories(${PROJECT_NAME}
-    PRIVATE ../include/
+    PRIVATE ${PROJECT_SOURCE_DIR}/include
 )
