@@ -1,5 +1,6 @@
 set(MANAGER_DIRS ${PROJECT_SOURCE_DIR}/src/Managers)
 set(SCENES_DIRS ${PROJECT_SOURCE_DIR}/src/Scenes)
+set(ECS_DIRS ${PROJECT_SOURCE_DIR}/src/ECS)
 
 add_executable(${PROJECT_NAME}
     main.cpp
@@ -7,12 +8,14 @@ add_executable(${PROJECT_NAME}
     ${MANAGER_DIRS}/SceneManager.cpp
     ${SCENES_DIRS}/GameScene.cpp
     ${SCENES_DIRS}/MenuScene.cpp
+    ${ECS_DIRS}/Systems/MovementSystem.cpp
     )
 
 set(EXECUTABLE_NAME "Dante")
 
 add_subdirectory(Managers)
 add_subdirectory(Scenes)
+# add_subdirectory(ECS)
 
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
@@ -27,10 +30,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 	external_deps
 )
 
-# target_link_libraries(${PROJECT_NAME} PRIVATE
-#     managers
-#     scenes
-# )
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE ${PROJECT_SOURCE_DIR}/include
