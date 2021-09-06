@@ -20,6 +20,7 @@ struct PositionComponent {
 struct MovementComponent {
   int velx{0};
   int vely{0};
+  bool moving{false};
   MovementComponent() = default;
 };
 
@@ -42,6 +43,18 @@ struct AnimationComponent {
   AnimationComponent() = default;
 };
 
-/* struct StateComponent { */
-  /* std::map<const std::string, > states; */
-/* }; */
+struct StateComponent {
+  enum STATUS{
+    IDLE,
+    WALKING,
+    RUNNING,
+  };
+  enum DIRECTION{
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+  };
+  STATUS status{IDLE};
+  DIRECTION facing{DIRECTION::SOUTH};
+};

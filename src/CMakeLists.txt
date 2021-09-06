@@ -9,6 +9,9 @@ add_executable(${PROJECT_NAME}
     ${SCENES_DIRS}/GameScene.cpp
     ${SCENES_DIRS}/MenuScene.cpp
     ${ECS_DIRS}/Systems/MovementSystem.cpp
+    ${ECS_DIRS}/Systems/ControllerSystem.cpp
+    ${ECS_DIRS}/Systems/AnimationSystem.cpp
+    ${ECS_DIRS}/Systems/RenderSystem.cpp
     )
 
 set(EXECUTABLE_NAME "Dante")

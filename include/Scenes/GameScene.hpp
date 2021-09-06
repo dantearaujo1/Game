@@ -1,9 +1,13 @@
 #include "Scene.hpp"
 
+#include "../vendors/entt/entt.hpp"
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include "../vendors/entt/entt.hpp"
+
+#include "../ECS/Systems/AnimationSystem.hpp"
+#include "../ECS/Systems/ControllerSystem.hpp"
 #include "../ECS/Systems/MovementSystem.hpp"
+#include "../ECS/Systems/RenderSystem.hpp"
 
 #include <iostream>
 
@@ -21,6 +25,10 @@ public:
 private:
   void setFrameRect(int row, int column);
 
-  entt::registry  m_entityManager;
-  MovementSystem  m_mSystem{&m_entityManager};
+  entt::registry m_entityManager;
+
+  MovementSystem m_mSystem{&m_entityManager};
+  ControllerSystem m_cSystem{&m_entityManager};
+  AnimationSystem m_aSystem{&m_entityManager};
+  RenderSystem m_rSystem{&m_entityManager};
 };
