@@ -34,27 +34,35 @@ struct SpriteComponent {
   SpriteComponent() = default;
 };
 
-struct AnimationComponent {
-  std::map<const std::string, std::vector<sf::IntRect>> frames;
-  float frameDuration;
-  std::string currentFrameString;
-  float currentFrameDuration;
-  int currentFrame{0};
-  AnimationComponent() = default;
-};
-
 struct StateComponent {
-  enum STATUS{
+  enum STATUS {
     IDLE,
     WALKING,
     RUNNING,
   };
-  enum DIRECTION{
+  enum DIRECTION {
     NORTH,
     SOUTH,
     EAST,
     WEST,
   };
-  STATUS status{IDLE};
+  STATUS status{WALKING};
   DIRECTION facing{DIRECTION::SOUTH};
+};
+
+struct Animation {
+  Animation(){};
+  std::vector<sf::IntRect> frames;
+  float duration{2.0f};
+  float currentDuration{0};
+  int currentFrame{0};
+  bool repeat{true};
+  bool reverse{true};
+};
+
+struct AnimationComponent {
+  std::map<std::pair<StateComponent::STATUS, StateComponent::DIRECTION>,
+           Animation>
+      animations;
+  AnimationComponent() = default;
 };

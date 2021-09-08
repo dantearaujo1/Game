@@ -3,7 +3,7 @@
 bool ControllerSystem::init(){
   return true;
 }
-void handleInput(sf::Event e){
+void ControllerSystem::handleInput(sf::Event e){
   if (e.type == sf::Event::KeyPressed){
     if (e.key.code == sf::Keyboard::D){
 
@@ -35,25 +35,27 @@ void ControllerSystem::update(float dt, float ups){
       mov.velx = -5;
       states.facing = StateComponent::DIRECTION::EAST;
       states.status = StateComponent::STATUS::WALKING;
-      ani.currentFrameString = "Left";
     }
     if (sf::Keyboard::isKeyPressed(con.keys["Right"])) {
       mov.velx = 5;
       states.facing = StateComponent::DIRECTION::WEST;
       states.status = StateComponent::STATUS::WALKING;
-      ani.currentFrameString = "Right";
     }
     if (sf::Keyboard::isKeyPressed(con.keys["Up"])) {
       mov.vely = -5;
       states.facing = StateComponent::DIRECTION::NORTH;
       states.status = StateComponent::STATUS::WALKING;
-      ani.currentFrameString = "Up";
     }
     if (sf::Keyboard::isKeyPressed(con.keys["Down"])) {
       mov.vely = 5;
       states.facing = StateComponent::DIRECTION::SOUTH;
       states.status = StateComponent::STATUS::WALKING;
-      ani.currentFrameString = "Down";
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+      mov.vely = 0;
+      mov.velx = 0;
+      states.facing = StateComponent::DIRECTION::SOUTH;
+      states.status = StateComponent::STATUS::IDLE;
     }
   }
 

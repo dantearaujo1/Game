@@ -4,9 +4,11 @@
 
 class AnimationSystem : CSystem {
 
-  public:
-    AnimationSystem(entt::registry* manager) : CSystem(manager){}
+public:
+  AnimationSystem(entt::registry *manager) : CSystem(manager) {}
 
-    bool init();
-    void update(float dt, float ups);
+  bool init();
+  void update(float dt, float ups);
+  Animation *createAnimation(int frames);
+
 };
