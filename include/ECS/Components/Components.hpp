@@ -31,6 +31,7 @@ struct ControllerComponent {
 
 struct SpriteComponent {
   sf::Sprite sprite;
+  PositionComponent* position;
   SpriteComponent() = default;
 };
 
@@ -64,5 +65,7 @@ struct AnimationComponent {
   std::map<std::pair<StateComponent::STATUS, StateComponent::DIRECTION>,
            Animation>
       animations;
+
+  SpriteComponent* spriteComponent{nullptr};
   AnimationComponent() = default;
 };

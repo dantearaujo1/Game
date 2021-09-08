@@ -18,6 +18,7 @@ bool GameScene::init() {
   cmovement.vely = 5;
 
   auto &scomponent = m_entityManager.emplace<SpriteComponent>(entity);
+  scomponent.position = &cposition;
   scomponent.sprite.setTexture(*m_director->getTexture("child"));
   scomponent.sprite.setTextureRect(sf::IntRect(2 * 32, 1 * 64, 32, 64));
   scomponent.sprite.setPosition(cposition.x, cposition.y);
@@ -29,6 +30,7 @@ bool GameScene::init() {
   ccontroller.keys["Up"] = sf::Keyboard::W;
 
   auto &canimation = m_entityManager.emplace<AnimationComponent>(entity);
+  canimation.spriteComponent = &scomponent;
 
   Animation anim;
   std::vector<sf::IntRect> frames;
