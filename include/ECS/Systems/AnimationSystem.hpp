@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CSystem.hpp"
+#include "../../Managers/SceneManager.hpp"
 
 class AnimationSystem : CSystem {
 
@@ -9,6 +10,9 @@ public:
 
   bool init();
   void update(float dt, float ups);
-  Animation *createAnimation(int frames);
+  void updateAnimation(Animation& anim, float dt);
+  bool isDurationOver(Animation& anim);
+
+  SceneManager* textureManager{nullptr};
 
 };

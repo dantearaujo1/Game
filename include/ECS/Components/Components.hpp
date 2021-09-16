@@ -54,6 +54,7 @@ struct StateComponent {
 struct Animation {
   Animation(){};
   std::vector<sf::IntRect> frames;
+  sf::Texture* texture{nullptr};
   float duration{2.0f};
   float currentDuration{0};
   int currentFrame{0};

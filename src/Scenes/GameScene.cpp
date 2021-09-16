@@ -10,6 +10,8 @@ bool GameScene::init() {
   const auto entity = m_entityManager.create();
   const auto entity2 = m_entityManager.create();
 
+  m_aSystem.textureManager = m_director;
+
   auto &cposition =
       m_entityManager.emplace<PositionComponent>(entity, 400, 300);
   auto &cstates = m_entityManager.emplace<StateComponent>(entity);
@@ -33,6 +35,7 @@ bool GameScene::init() {
   canimation.spriteComponent = &scomponent;
 
   Animation anim;
+  anim.texture = m_director->getTexture("child");
   std::vector<sf::IntRect> frames;
   for (int i = 0; i <= 4; i++) {
     frames.push_back(sf::IntRect(i * 32, 0, 32, 64));
@@ -44,6 +47,7 @@ bool GameScene::init() {
                      anim));
 
   Animation anim2;
+  anim2.texture = m_director->getTexture("child");
   std::vector<sf::IntRect> frames1;
   for (int i = 0; i <= 4; i++) {
     frames1.push_back(sf::IntRect(i * 32, 64, 32, 64));
@@ -55,6 +59,7 @@ bool GameScene::init() {
                      anim2));
 
   Animation anim3;
+  anim3.texture = m_director->getTexture("child");
   std::vector<sf::IntRect> frames2;
   for (int i = 0; i <= 7; i++) {
     frames2.push_back(sf::IntRect(i * 32, 128, 32, 64));
@@ -66,6 +71,7 @@ bool GameScene::init() {
                      anim3));
 
   Animation anim4;
+  anim4.texture = m_director->getTexture("child");
   std::vector<sf::IntRect> frames3;
   for (int i = 0; i <= 7; i++) {
     frames3.push_back(sf::IntRect(i * 32, 192, 32, 64));

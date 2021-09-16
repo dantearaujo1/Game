@@ -20,13 +20,12 @@ void ControllerSystem::handleInput(sf::Event e){
   }
 }
 void ControllerSystem::update(float dt, float ups){
-  auto view = m_entityManager->view<StateComponent,AnimationComponent, ControllerComponent,MovementComponent>();
+  auto view = m_entityManager->view<StateComponent, ControllerComponent,MovementComponent>();
   for (auto entity: view){
 
     auto &con = view.get<ControllerComponent>(entity);
     auto &states = view.get<StateComponent>(entity);
     auto &mov = view.get<MovementComponent>(entity);
-    auto &ani = view.get<AnimationComponent>(entity);
 
     mov.velx = 0;
     mov.vely = 0;
