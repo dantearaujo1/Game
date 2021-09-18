@@ -1,11 +1,11 @@
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <map>
-#include <string>
+#pragma once
 
 #include "SFML/Graphics/Sprite.hpp"
+#include <SFML/Graphics/Rect.hpp>
 #include "SFML/Window/Keyboard.hpp"
 #include "SFML/Window/Mouse.hpp"
+
+#include "../../Animation.hpp"
 
 struct PositionComponent {
   int x{0};
@@ -40,6 +40,7 @@ struct StateComponent {
     IDLE,
     WALKING,
     RUNNING,
+    JUMPING,
   };
   enum DIRECTION {
     NORTH,
@@ -51,22 +52,10 @@ struct StateComponent {
   DIRECTION facing{DIRECTION::SOUTH};
 };
 
-struct Animation {
-  Animation(){};
-  std::vector<sf::IntRect> frames;
-  sf::Texture* texture{nullptr};
-  float duration{2.0f};
-  float currentDuration{0};
-  int currentFrame{0};
-  bool repeat{true};
-  bool reverse{true};
-};
-
 struct AnimationComponent {
-  std::map<std::pair<StateComponent::STATUS, StateComponent::DIRECTION>,
-           Animation>
-      animations;
-
+  typedef std::map<std::pair<StateComponent::STATUS, StateComponent::DIRECTION>, Animation>  Animap;
+  Animap animations;
   SpriteComponent* spriteComponent{nullptr};
+
   AnimationComponent() = default;
 };

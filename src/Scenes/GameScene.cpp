@@ -30,6 +30,7 @@ bool GameScene::init() {
   ccontroller.keys["Right"] = sf::Keyboard::D;
   ccontroller.keys["Down"] = sf::Keyboard::S;
   ccontroller.keys["Up"] = sf::Keyboard::W;
+  ccontroller.keys["Jump"] = sf::Keyboard::Space;
 
   auto &canimation = m_entityManager.emplace<AnimationComponent>(entity);
   canimation.spriteComponent = &scomponent;
@@ -53,10 +54,7 @@ bool GameScene::init() {
     frames1.push_back(sf::IntRect(i * 32, 64, 32, 64));
   }
   anim2.frames = frames1;
-  canimation.animations.insert(
-      std::make_pair(std::make_pair(StateComponent::STATUS::WALKING,
-                                    StateComponent::DIRECTION::SOUTH),
-                     anim2));
+  canimation.animations.insert(std::make_pair(std::make_pair(StateComponent::STATUS::WALKING, StateComponent::DIRECTION::SOUTH), anim2));
 
   Animation anim3;
   anim3.texture = m_director->getTexture("child");
@@ -65,10 +63,7 @@ bool GameScene::init() {
     frames2.push_back(sf::IntRect(i * 32, 128, 32, 64));
   }
   anim3.frames = frames2;
-  canimation.animations.insert(
-      std::make_pair(std::make_pair(StateComponent::STATUS::WALKING,
-                                    StateComponent::DIRECTION::WEST),
-                     anim3));
+  canimation.animations.insert(std::make_pair(std::make_pair(StateComponent::STATUS::WALKING, StateComponent::DIRECTION::WEST), anim3));
 
   Animation anim4;
   anim4.texture = m_director->getTexture("child");
@@ -77,10 +72,16 @@ bool GameScene::init() {
     frames3.push_back(sf::IntRect(i * 32, 192, 32, 64));
   }
   anim4.frames = frames3;
-  canimation.animations.insert(
-      std::make_pair(std::make_pair(StateComponent::STATUS::WALKING,
-                                    StateComponent::DIRECTION::EAST),
-                     anim4));
+  canimation.animations.insert(std::make_pair(std::make_pair(StateComponent::STATUS::WALKING,StateComponent::DIRECTION::EAST),anim4));
+
+  Animation anim_idle_left;
+  Animation anim_idle_right;
+  Animation anim_idle_north;
+  Animation anim_idle_south;
+  anim_idle_left.texture = m_director->getTexture("child");
+  anim_idle_right.texture = m_director->getTexture("child");
+  anim_idle_north.texture = m_director->getTexture("child");
+  anim_idle_south.texture = m_director->getTexture("child");
 
   return true;
 }

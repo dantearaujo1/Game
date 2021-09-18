@@ -6,6 +6,7 @@ add_executable(${PROJECT_NAME}
     main.cpp
     Game.cpp
     ${MANAGER_DIRS}/SceneManager.cpp
+    ${MANAGER_DIRS}/AnimationManager.cpp
     ${SCENES_DIRS}/GameScene.cpp
     ${SCENES_DIRS}/MenuScene.cpp
     ${ECS_DIRS}/Systems/MovementSystem.cpp

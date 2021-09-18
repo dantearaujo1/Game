@@ -29,6 +29,7 @@ void ControllerSystem::update(float dt, float ups){
 
     mov.velx = 0;
     mov.vely = 0;
+    states.status = StateComponent::STATUS::IDLE;
 
     if (sf::Keyboard::isKeyPressed(con.keys["Left"])) {
       mov.velx = -5;
@@ -50,12 +51,17 @@ void ControllerSystem::update(float dt, float ups){
       states.facing = StateComponent::DIRECTION::SOUTH;
       states.status = StateComponent::STATUS::WALKING;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-      mov.vely = 0;
-      mov.velx = 0;
+    if (sf::Keyboard::isKeyPressed(con.keys["Jump"])) {
+      mov.vely = 5;
       states.facing = StateComponent::DIRECTION::SOUTH;
-      states.status = StateComponent::STATUS::IDLE;
+      states.status = StateComponent::STATUS::JUMPING;
     }
+    /* if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) { */
+    /*   mov.vely = 0; */
+    /*   mov.velx = 0; */
+    /*   states.facing = StateComponent::DIRECTION::SOUTH; */
+    /*   states.status = StateComponent::STATUS::IDLE; */
+    /* } */
   }
 
 }

@@ -2,6 +2,7 @@
 
 #include "CSystem.hpp"
 #include "../../Managers/SceneManager.hpp"
+#include "../../Managers/AnimationManager.hpp"
 
 class AnimationSystem : CSystem {
 
@@ -14,5 +15,6 @@ public:
   bool isDurationOver(Animation& anim);
 
   SceneManager* textureManager{nullptr};
+  AnimationManager animationManager;
 
 };
