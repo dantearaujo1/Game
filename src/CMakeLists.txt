@@ -1,5 +1,6 @@
 set(MANAGER_DIRS ${PROJECT_SOURCE_DIR}/src/Managers)
 set(SCENES_DIRS ${PROJECT_SOURCE_DIR}/src/Scenes)
+set(TOOLS_DIRS ${PROJECT_SOURCE_DIR}/src/Tools)
 set(ECS_DIRS ${PROJECT_SOURCE_DIR}/src/ECS)
 
 add_executable(${PROJECT_NAME}
@@ -10,6 +11,7 @@ add_executable(${PROJECT_NAME}
     ${MANAGER_DIRS}/SceneManager.cpp
     ${MANAGER_DIRS}/TileManager.cpp
     ${MANAGER_DIRS}/AnimationManager.cpp
+    ${TOOLS_DIRS}/TextureHelper.cpp
     ${SCENES_DIRS}/GameScene.cpp
     ${SCENES_DIRS}/MenuScene.cpp
     ${ECS_DIRS}/Systems/MovementSystem.cpp
