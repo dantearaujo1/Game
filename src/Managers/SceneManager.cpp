@@ -9,7 +9,7 @@ SceneManager::~SceneManager() {
 }
 
 void SceneManager::init() {
-  m_textures.setDirectory("assets/textures/");
+  m_textures.setDirectory("../assets/textures/");
   loadResources();
   addScene(new GameScene(this));
 }
@@ -19,6 +19,7 @@ void SceneManager::loadResources() {
   m_textures.loadFromFile("male", "male_sprite_model.png");
   m_textures.loadFromFile("female", "female_sprite_model.png");
   m_textures.loadFromFile("child", "child_sprite_model.png");
+  m_textures.loadJokerfromFile("joker.png");
 }
 void SceneManager::addScene(Scene *l_scene) {
   if (l_scene) {

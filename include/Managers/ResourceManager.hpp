@@ -41,9 +41,12 @@ public:
     return m_joker;
   }
   void loadJokerfromFile(const std::string &path) {
-    if (!m_joker->loadFromFile(m_directory + path)) {
+    T* temp = new T();
+    if (!temp->loadFromFile(m_directory + path)) {
       std::cout << "Joker not loaded!" << std::endl;
     }
+    m_joker = temp;
+    std::cout << "Joker loaded!" << std::endl;
   }
   void setDirectory(const std::string &path) { m_directory = path; }
 

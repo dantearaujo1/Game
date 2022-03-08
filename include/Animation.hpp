@@ -1,15 +1,19 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
+#include <string>
+#include <vector>
 
+struct FrameData{
+  FrameData(){};
+  float duration;
+  std::string id;
+  sf::IntRect frame;
+};
 
 struct Animation {
   Animation(){};
-  std::vector<sf::IntRect> frames;
-  sf::Texture* texture{nullptr}; // WARN: This is okay? have a text in animation?
-  float duration{2.0f};
-  float currentDuration{0};
+  std::vector<FrameData*> framesData;
   int currentFrame{0};
-  bool repeat{true};
-  bool reverse{true};
+  float currentDuration{0};
 };

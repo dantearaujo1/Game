@@ -12,6 +12,7 @@ public:
 
   void init();
   void loadResources();
+  ResourceManager<sf::Texture>* getTextureManager(){return &m_textures;}
 
   void addScene(Scene *l_scene);
   void deleteScene();

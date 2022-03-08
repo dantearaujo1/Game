@@ -1,97 +1,55 @@
 #include "../../include/Scenes/GameScene.hpp"
 #include "../../include/Managers/SceneManager.hpp"
 
+#include <iterator>
+#include <type_traits>
 #include <utility>
+// #include <iostream>
 
-GameScene::GameScene(SceneManager *manager) : Scene(manager) {}
+GameScene::GameScene(SceneManager *manager) : Scene(manager), m_tileManager(m_director->getTextureManager()) {
+}
 GameScene::~GameScene() { m_director = nullptr; }
 
 bool GameScene::init() {
-  const auto entity = m_entityManager.create();
-  const auto entity2 = m_entityManager.create();
 
   m_aSystem.textureManager = m_director;
-
-  auto &cposition =
-      m_entityManager.emplace<PositionComponent>(entity, 400, 300);
-  auto &cstates = m_entityManager.emplace<StateComponent>(entity);
-  auto &cmovement = m_entityManager.emplace<MovementComponent>(entity);
-  cmovement.velx = 5;
-  cmovement.vely = 5;
-
-  auto &scomponent = m_entityManager.emplace<SpriteComponent>(entity);
-  scomponent.position = &cposition;
-  scomponent.sprite.setTexture(*m_director->getTexture("child"));
-  scomponent.sprite.setTextureRect(sf::IntRect(2 * 32, 1 * 64, 32, 64));
-  scomponent.sprite.setPosition(cposition.x, cposition.y);
-
-  auto &ccontroller = m_entityManager.emplace<ControllerComponent>(entity);
-  ccontroller.keys["Left"] = sf::Keyboard::A;
-  ccontroller.keys["Right"] = sf::Keyboard::D;
-  ccontroller.keys["Down"] = sf::Keyboard::S;
-  ccontroller.keys["Up"] = sf::Keyboard::W;
-  ccontroller.keys["Jump"] = sf::Keyboard::Space;
-
-  auto &canimation = m_entityManager.emplace<AnimationComponent>(entity);
-  canimation.spriteComponent = &scomponent;
-
-  Animation anim;
-  anim.texture = m_director->getTexture("child");
-  std::vector<sf::IntRect> frames;
-  for (int i = 0; i <= 4; i++) {
-    frames.push_back(sf::IntRect(i * 32, 0, 32, 64));
+  if(!loadAnimations()){
+    return false;
   }
-  anim.frames = frames;
-  canimation.animations.insert(
-      std::make_pair(std::make_pair(StateComponent::STATUS::WALKING,
-                                    StateComponent::DIRECTION::NORTH),
-                     anim));
-
-  Animation anim2;
-  anim2.texture = m_director->getTexture("child");
-  std::vector<sf::IntRect> frames1;
-  for (int i = 0; i <= 4; i++) {
-    frames1.push_back(sf::IntRect(i * 32, 64, 32, 64));
+  m_eFactory.createPlayer(1);
+  m_eFactory.createPlayer(2);
+  for (int i = 0; i < 20; i++){
+    for (int j = 0; j < 25; j++){
+      m_tileManager.createTile(j*32,i*32,32,32,"map", TILETYPE::FLOOR);
+    }
   }
-  anim2.frames = frames1;
-  canimation.animations.insert(std::make_pair(std::make_pair(StateComponent::STATUS::WALKING, StateComponent::DIRECTION::SOUTH), anim2));
-
-  Animation anim3;
-  anim3.texture = m_director->getTexture("child");
-  std::vector<sf::IntRect> frames2;
-  for (int i = 0; i <= 7; i++) {
-    frames2.push_back(sf::IntRect(i * 32, 128, 32, 64));
-  }
-  anim3.frames = frames2;
-  canimation.animations.insert(std::make_pair(std::make_pair(StateComponent::STATUS::WALKING, StateComponent::DIRECTION::WEST), anim3));
-
-  Animation anim4;
-  anim4.texture = m_director->getTexture("child");
-  std::vector<sf::IntRect> frames3;
-  for (int i = 0; i <= 7; i++) {
-    frames3.push_back(sf::IntRect(i * 32, 192, 32, 64));
-  }
-  anim4.frames = frames3;
-  canimation.animations.insert(std::make_pair(std::make_pair(StateComponent::STATUS::WALKING,StateComponent::DIRECTION::EAST),anim4));
-
-  Animation anim_idle_left;
-  Animation anim_idle_right;
-  Animation anim_idle_north;
-  Animation anim_idle_south;
-  anim_idle_left.texture = m_director->getTexture("child");
-  anim_idle_right.texture = m_director->getTexture("child");
-  anim_idle_north.texture = m_director->getTexture("child");
-  anim_idle_south.texture = m_director->getTexture("child");
 
   return true;
 }
 void GameScene::handleInput(sf::Event e) { m_cSystem.handleInput(e); }
-void GameScene::render(sf::RenderWindow &window) { m_rSystem.render(window); }
+void GameScene::render(sf::RenderWindow &window) {
+  m_tileManager.draw(window);
+  m_rSystem.render(window);
+}
 void GameScene::update(float dt, float ups) {
   m_cSystem.update(dt, ups);
   m_mSystem.update(dt, ups);
 
   // Systems that update Render to window something
+  m_tileManager.update(dt,ups);
   m_rSystem.update(dt, ups);
   m_aSystem.update(dt, ups);
+}
+bool GameScene::loadAnimations(){
+  m_aFactory.createAnimation("child_walking_left");
+  m_aFactory.createAnimation("child_walking_right");
+  m_aFactory.createAnimation("child_walking_north");
+  m_aFactory.createAnimation("child_walking_south");
+
+  m_aFactory.addFrames("child_walking_north", 5, 0,0,32,64);
+  m_aFactory.addFrames("child_walking_south", 5, 0,64,32,64);
+  m_aFactory.addFrames("child_walking_left", 8, 0,128,32,64);
+  m_aFactory.addFrames("child_walking_right", 8, 0,192,32,64);
+
+  return true;
 }

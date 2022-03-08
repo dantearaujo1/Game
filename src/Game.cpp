@@ -1,10 +1,3 @@
-// 3rd Parties Libraries
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Keyboard.hpp>
-
-// System libraries
-#include <iostream>
-// Engine Libraries
 #include "../include/Game.hpp"
 
 Game::Game() {}
@@ -21,6 +14,7 @@ void Game::handleInput() {
     if (m_event.type == sf::Event::Closed) {
       m_window.close();
       std::cout << "Window closed" << std::endl;
+      std::cout << "CLOSED closed" << std::endl;
     }
     if (m_event.type == sf::Event::KeyPressed) {
       std::cout << "Event - KeyPressed: " << m_event.key.code << std::endl;
@@ -38,6 +32,7 @@ void Game::render() {
   m_window.clear(sf::Color::Black);
   m_sceneManager.render(m_window);
   m_window.display();
+
 }
 
 void Game::update(float dt, float target_FPS) {
@@ -48,14 +43,13 @@ void Game::update(float dt, float target_FPS) {
 
 void Game::run() {
 
-  float UPS = 60.0f;
   float TARGET_UPS = 60.0f;
 
   sf::Time accumulator;
   sf::Time lastTime = sf::seconds(0);
   sf::Time newTime = sf::seconds(0);
   ;
-  sf::Time ups = sf::seconds(1 / UPS);
+  sf::Time ups = sf::seconds(1 / TARGET_UPS);
 
   while (m_window.isOpen()) {
 
@@ -68,8 +62,6 @@ void Game::run() {
 
     while (accumulator > ups) {
       update(ups.asSeconds(), TARGET_UPS);
-      /* std::cout << "Accumulator = " << accumulator.asSeconds() << " UPS = "
-       * << ups.asSeconds() << std::endl; */
       accumulator -= ups;
     }
     render();

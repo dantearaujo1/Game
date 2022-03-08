@@ -5,7 +5,10 @@ set(ECS_DIRS ${PROJECT_SOURCE_DIR}/src/ECS)
 add_executable(${PROJECT_NAME}
     main.cpp
     Game.cpp
+    EntityFactory.cpp
+    Tile.cpp
     ${MANAGER_DIRS}/SceneManager.cpp
+    ${MANAGER_DIRS}/TileManager.cpp
     ${MANAGER_DIRS}/AnimationManager.cpp
     ${SCENES_DIRS}/GameScene.cpp
     ${SCENES_DIRS}/MenuScene.cpp

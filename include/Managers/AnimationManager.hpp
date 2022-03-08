@@ -1,22 +1,23 @@
-#include "../ECS/Components/Components.hpp"
+#pragma once
+
+#include "../Animation.hpp"
 #include <map>
 
 
-class AnimationManager{
+class AnimationFactory{
 
   public:
-    AnimationManager();
-    ~AnimationManager();
+    AnimationFactory();
+    ~AnimationFactory();
 
-    void addFrame(Animation& animation, sf::IntRect frame);
-    void addTexture(Animation& animation, sf::Texture& texture);
-    bool hasAnimation(int entityID, std::pair<StateComponent::STATUS,StateComponent::DIRECTION> state);
-    void setState();
-    Animation* getAnimation();
+    Animation* createAnimation(const std::string& ID);
+    Animation* getAnimation(const std::string& ID);
+    bool hasAnimation(const std::string& ID);
+    void addFrames(const std::string& ID, int frames, int x, int y, int width, int height, bool horizontal=true);
 
   private:
+    void addFrame(const std::string& ID, sf::IntRect frame, float duration=2.0f);
 
-  typedef std::map<std::pair<StateComponent::STATUS,StateComponent::DIRECTION>,Animation*> Animap;
-  std::map<int,Animap> m_animations;
+    std::map<const std::string, Animation*> m_animations;
 
 };

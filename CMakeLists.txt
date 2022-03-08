@@ -9,6 +9,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(src)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_library(external_deps INTERFACE)
 target_link_libraries(external_deps INTERFACE
 	sfml-graphics
