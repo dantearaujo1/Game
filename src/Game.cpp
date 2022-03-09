@@ -6,11 +6,14 @@ Game::~Game() {}
 
 void Game::init(const std::string &title, uint32_t width, uint32_t height) {
   m_window.create(sf::VideoMode(width, height), title);
+  ImGui::SFML::Init(m_window);
   m_sceneManager.init();
 }
 
 void Game::handleInput() {
   while (m_window.pollEvent(m_event)) {
+    // Process all ImGUI Events before everything;
+    ImGui::SFML::ProcessEvent(m_event);
     if (m_event.type == sf::Event::Closed) {
       m_window.close();
       std::cout << "Window closed" << std::endl;
@@ -29,8 +32,16 @@ void Game::handleInput() {
 
 void Game::render() {
 
-  m_window.clear(sf::Color::Black);
+  // Render Scenes
   m_sceneManager.render(m_window);
+
+  // Render ImGUI AFTER everything
+  ImGui::Begin("My First tool");
+  ImGui::End();
+
+  // Clear screen
+  m_window.clear(sf::Color::Black);
+  ImGui::SFML::Render(m_window);
   m_window.display();
 
 }
@@ -64,6 +75,9 @@ void Game::run() {
       update(ups.asSeconds(), TARGET_UPS);
       accumulator -= ups;
     }
+    // ImGUI must be updated everytime
+    ImGui::SFML::Update(m_window, m_deltaTime);
     render();
   }
+  ImGui::SFML::Shutdown();
 }

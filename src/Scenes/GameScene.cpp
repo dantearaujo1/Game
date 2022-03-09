@@ -5,11 +5,13 @@
 #include <type_traits>
 #include <utility>
 #include <random>
-// #include <iostream>
 
 GameScene::GameScene(SceneManager *manager) : Scene(manager), m_tileManager(m_director->getTextureManager()) {
+
 }
-GameScene::~GameScene() { m_director = nullptr; }
+GameScene::~GameScene() {
+  m_director = nullptr;
+}
 
 bool GameScene::init() {
 
@@ -19,18 +21,25 @@ bool GameScene::init() {
   }
   m_eFactory.createPlayer(1);
   // m_eFactory.createPlayer(2);
+
+  // Procedural map creation
   std::random_device dvc;
   for (int i = 0; i < 20; i++){
     for (int j = 0; j < 25; j++){
-      if (i % 2 == 0){
-        m_tileManager.createTile(dvc()%7, j*32,i*32,32,32,"map", TILETYPE::FLOOR);
+      if ((i + j) % 2 == 0){
+        if (dvc() % 7 == 0){
+          m_tileManager.createTile(dvc()%2+3, j*32,i*32,32,32,"map", TILETYPE::FLOOR);
+          continue;
+        }
+        m_tileManager.createTile(1, j*32,i*32,32,32,"map", TILETYPE::FLOOR);
       }
       else{
 
-        m_tileManager.createTile(dvc()%7, j*32,i*32,32,32,"map", TILETYPE::FLOOR);
+        m_tileManager.createTile(1, j*32,i*32,32,32,"map", TILETYPE::FLOOR);
       }
     }
   }
+
 
   return true;
 }

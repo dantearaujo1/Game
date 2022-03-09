@@ -22,9 +22,6 @@ add_executable(${PROJECT_NAME}
 
 set(EXECUTABLE_NAME "Dante")
 
-add_subdirectory(Managers)
-add_subdirectory(Scenes)
-# add_subdirectory(ECS)
 
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
