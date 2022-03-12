@@ -34,10 +34,10 @@ public:
   }
   T *getResource(const std::string &name) {
     if (m_resources.find(name) != m_resources.end()) {
-      std::cout << "Using texture id: " << name << std::endl;
+      // std::cout << "Using texture id: " << name << std::endl;
       return m_resources[name];
     }
-    std::cout << "Using m_joker to the texture" << std::endl;
+    // std::cout << "Using m_joker to the texture" << std::endl;
     return m_joker;
   }
   void loadJokerfromFile(const std::string &path) {

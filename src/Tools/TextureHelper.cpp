@@ -7,6 +7,7 @@ TextureHelper::TextureHelper(sf::Vector2i tileSize, sf::Vector2i textureSize)
                     m_textureSize.y / m_tileSize.y) {}
 
 TextureHelper::~TextureHelper() {}
+
 sf::IntRect TextureHelper::getTile(int posx, int posy) {
   if (posx < m_tilesLength.x && posy < m_tilesLength.y) {
     return sf::IntRect(posx * m_tileSize.x, posy * m_tileSize.y, m_tileSize.x,
@@ -25,4 +26,7 @@ sf::IntRect TextureHelper::getTileByID(int id, bool rowFirst) {
     return sf::IntRect(0, 0, 32, 32);
   }
   return sf::IntRect(0, 0, 32, 32);
+}
+int TextureHelper::getTileID(int posx, int posy){
+  return (posx / m_tileSize.x + posy  / m_tileSize.y * m_tilesLength.x);
 }

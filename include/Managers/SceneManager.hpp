@@ -1,16 +1,18 @@
 #pragma once
 #include <stack>
 
+#include "Manager.hpp"
 #include "../Managers/ResourceManager.hpp"
 #include "../Scenes/Scene.hpp"
-#include "SFML/Graphics.hpp"
 
-class SceneManager {
+
+
+class SceneManager : public Manager {
 public:
-  SceneManager();
+  SceneManager(Game* app = nullptr);
   ~SceneManager();
 
-  void init();
+  void init(Game* app);
   void loadResources();
   ResourceManager<sf::Texture>* getTextureManager(){return &m_textures;}
 
@@ -19,6 +21,8 @@ public:
 
   void nextScene();
   void previousScene();
+
+  Game* getApp() { return m_app; }
 
   sf::Texture *getTexture(const std::string &id) {
     return m_textures.getResource(id);
@@ -32,4 +36,6 @@ private:
   std::stack<Scene *> m_scenes;
   Scene *m_currentScene;
   ResourceManager<sf::Texture> m_textures;
+  Game* m_app;
 };
+

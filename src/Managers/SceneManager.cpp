@@ -1,14 +1,22 @@
 #include "../../include/Managers/SceneManager.hpp"
 #include "../../include/Scenes/GameScene.hpp"
 
-SceneManager::SceneManager() {}
+#include "../../include/Game.hpp"
+
+SceneManager::SceneManager(Game* app ) : m_app(app) {
+}
+
 SceneManager::~SceneManager() {
   while (!m_scenes.empty()){
     deleteScene();
   }
+  Manager::~Manager();
 }
 
-void SceneManager::init() {
+void SceneManager::init(Game* app) {
+  if(m_app == nullptr){
+    m_app = app;
+  }
   m_textures.setDirectory("../assets/textures/");
   loadResources();
   addScene(new GameScene(this));

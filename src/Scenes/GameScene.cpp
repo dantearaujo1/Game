@@ -1,12 +1,15 @@
 #include "../../include/Scenes/GameScene.hpp"
 #include "../../include/Managers/SceneManager.hpp"
 
+#include "../../include/Game.hpp"
+
+#include "imgui.h"
 #include <iterator>
 #include <type_traits>
 #include <utility>
 #include <random>
 
-GameScene::GameScene(SceneManager *manager) : Scene(manager), m_tileManager(m_director->getTextureManager()) {
+GameScene::GameScene(SceneManager *manager) : Scene(manager), m_tileManager(m_director->getApp(),m_director->getTextureManager()) {
 
 }
 GameScene::~GameScene() {
@@ -24,7 +27,7 @@ bool GameScene::init() {
 
   // Procedural map creation
   std::random_device dvc;
-  for (int i = 0; i < 20; i++){
+  for (int i = 0; i < 19; i++){
     for (int j = 0; j < 25; j++){
       if ((i + j) % 2 == 0){
         if (dvc() % 7 == 0){
@@ -43,19 +46,114 @@ bool GameScene::init() {
 
   return true;
 }
-void GameScene::handleInput(sf::Event e) { m_cSystem.handleInput(e); }
-void GameScene::render(sf::RenderWindow &window) {
-  m_tileManager.draw(window);
-  m_rSystem.render(window);
+
+void GameScene::handleInput(sf::Event e) {
+
+  if (e.type == sf::Event::KeyPressed){
+    // if(ImGui::Begin("Debug Information")){
+    //   ImGui::Text("Last KeyPressed: %c", char(e.key.code));
+    //   ImGui::End();
+    // }
+    if (e.key.code == sf::Keyboard::Key::F1){
+      m_director->getApp()->setDebug(!m_director->getApp()->isDebugActivated());
+    }
+  }
+
+  m_cSystem.handleInput(e);
 }
+
+void GameScene::render(sf::RenderWindow &window) {
+  m_tileManager.render(window);
+  m_rSystem.render(window);
+
+
+  // THESE LINES ARE FOR GUI USING IMGUI =====================================
+  // Getting the style variable of ImGui
+  static ImGuiStyle& style = ImGui::GetStyle();
+
+  style.WindowMinSize = ImVec2(500,400);
+  style.Colors[ImGuiCol_WindowBg] = ImColor(0,0,0,255);
+  ImGui::SetNextWindowPos(sf::Vector2i(0 + ImGui::GetWindowSize().x/2,0 + ImGui::GetWindowSize().y/2),0, sf::Vector2f(0.5f,0.5f));
+  if (m_director->getApp()->isDebugActivated()) {
+    if(ImGui::Begin("Debug Information", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize)){
+      ImGui::Text("Mouse coordinates: %ix , %iy", sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+      ImGui::Text("Tile coordinates: %ix , %iy", sf::Mouse::getPosition(window).x/32, sf::Mouse::getPosition(window).y/32);
+    }
+    ImGui::End();
+
+    if(ImGui::Begin("Tileset Menu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize)){
+
+      auto helper = m_tileManager.getTextureHelper();
+      static auto tileID = helper.getTileID(0,0);
+      const auto tileX = helper.getTilesLength().x;
+      const auto tileY = helper.getTilesLength().y;
+      const auto tileSize = helper.getTileSize().x;
+      const auto tilemap = m_director->getTexture("map");
+      auto draw_list = ImGui::GetWindowDrawList();
+
+      ImGui::Text("Selected tileID: %i", tileID);
+      sf::Vector2f tilesetImagePos = ImGui::GetCursorScreenPos();
+      ImGui::Image(*tilemap, (ImVec2) m_director->getTexture("map")->getSize());
+
+
+      // Drawing vertically lines inside or tileset
+      for (int x = 0; x <= tileX; x++){
+        draw_list->AddLine(ImVec2(tilesetImagePos.x + x * tileSize, tilesetImagePos.y), ImVec2(tilesetImagePos.x + x * tileSize, helper.getTextureSize().y),ImColor(255,0,0));
+      }
+      // Drawing  lines horizontally inside or tileset
+      for (int y = 0; y <= tileY; y++){
+        draw_list->AddLine(ImVec2(tilesetImagePos.x , tilesetImagePos.y + y * tileSize), ImVec2(tilesetImagePos.x + helper.getTextureSize().x, tilesetImagePos.y + y * tileSize),ImColor(255,0,0));
+      }
+
+      // Checking if Last Appended Item is Hovered (IMAGE) and Clicked with relative Mouse Position
+      if (ImGui::IsItemHovered()){
+        if (ImGui::IsMouseClicked(0)){
+          // Getting the Mouse Position relative to the TilesetImage as we click
+          const auto relMousePos = static_cast<sf::Vector2i>(sf::Vector2f(ImGui::GetMousePos()) - tilesetImagePos);
+          // Getting the Unique ID from the tileset as we click
+          tileID = helper.getTileID(relMousePos.x,relMousePos.y);
+        }
+      }
+      // Now that we have our tileID we can highlight our selected Tile
+      const auto tileRect = static_cast<sf::FloatRect>(helper.getTileByID(tileID));
+
+      sf::Vector2f selectedTileTL = sf::Vector2f(helper.getTileByID(tileID).left, helper.getTileByID(tileID).top);
+      sf::Vector2f selectedTileBR = selectedTileTL + static_cast<sf::Vector2f>(helper.getTileSize());
+
+      selectedTileTL += tilesetImagePos;
+      selectedTileBR += tilesetImagePos;
+
+      draw_list->AddRect(selectedTileTL, selectedTileBR, ImColor(0,255,0));
+
+      // We Need to Place Selected Tile In a BigPicture
+      auto tileImagePos = tilesetImagePos;
+      sf::Sprite sprite;
+      sprite.setTexture(*tilemap);
+      sprite.setTextureRect(static_cast<sf::IntRect>(tileRect));
+      sprite.scale(4.0f,4.0f);
+      int padding = 50;
+      tileImagePos.x += helper.getTextureSize().x + padding;
+      ImGui::SetCursorScreenPos(tileImagePos);
+
+
+      ImGui::Image(sprite);
+    }
+    ImGui::End();
+
+  // ABOVE LINES ARE FOR GUI USING IMGUI =====================================
+
+  }
+
+}
+
 void GameScene::update(float dt, float ups) {
-  m_cSystem.update(dt, ups);
-  m_mSystem.update(dt, ups);
+  m_cSystem.update(dt, ups); // Controller System
+  m_mSystem.update(dt, ups); // Movement System
 
   // Systems that update Render to window something
-  m_tileManager.update(dt,ups);
-  m_rSystem.update(dt, ups);
-  m_aSystem.update(dt, ups);
+  m_tileManager.update(dt,ups); // TileManager
+  m_rSystem.update(dt, ups); // Render System
+  m_aSystem.update(dt, ups); // Animation System
 }
 bool GameScene::loadAnimations(){
   m_aFactory.createAnimation("child_walking_left");

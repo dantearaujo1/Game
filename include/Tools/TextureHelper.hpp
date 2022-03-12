@@ -13,6 +13,7 @@ public:
   ~TextureHelper();
 
   sf::IntRect getTile(int posx, int posy);
+  int getTileID(int posx, int posy);
   sf::IntRect getTileByID(int id, bool rowFirst = true);
   sf::Vector2i getTextureSize() { return m_textureSize; }
   sf::Vector2i getTilesLength() { return m_tilesLength; }
@@ -20,6 +21,7 @@ public:
     m_tileSize = sf::Vector2i(width, height);
   }
   void setTileSize(const sf::Vector2i &size) { m_tileSize = size; }
+  sf::Vector2i getTileSize() const { return m_tileSize; }
 
 private:
   sf::Vector2i m_tileSize;

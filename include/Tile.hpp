@@ -23,6 +23,8 @@ public:
 
   TILETYPE getType() const { return m_type; }
   sf::Sprite& getSprite() { return m_sprite; }
+  sf::Vector2f getPosition() { return m_position; }
+  sf::Vector2f getSize() { return m_size; }
 
   void update(float dt, float ups);
   void draw(sf::RenderWindow& window);
