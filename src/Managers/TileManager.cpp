@@ -8,7 +8,14 @@ TileManager::TileManager(Game *app, ResourceManager<sf::Texture> *manager)
       sf::Vector2i(m_resources->getResource("map")->getSize())),
       m_app(app) {}
 
-TileManager::~TileManager() {}
+TileManager::~TileManager() {
+  if (!m_tiles.empty()){
+    Tile* forDelete = m_tiles.back();
+    delete forDelete;
+    forDelete = nullptr;
+    m_tiles.pop_back();
+  }
+}
 void TileManager::init(Game* app) {if(!m_app) m_app=app;}
 void TileManager::handleInput(sf::Event e) {}
 

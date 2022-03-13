@@ -1,5 +1,6 @@
 #include "../include/Tile.hpp"
 
+
 Tile::Tile(sf::Vector2f position, sf::Vector2f size, TILETYPE type) : m_position(position), m_size(size), m_type(type){
 
 }

@@ -27,9 +27,12 @@ public:
 
 
   void createTile(int texLoc, float x = 0, float y = 0, float width = 32.0f, float height = 32.0f, const std::string& id = "map", TILETYPE type = TILETYPE::NONE);
+
   bool setTileTexture(int index, const sf::Texture& texture );
   void setTextureRect(int index, sf::IntRect rect);
+
   TextureHelper& getTextureHelper() { return m_helper; }
+  Tile* getTile(int id) { return m_tiles[id]; }
 
 private:
   ResourceManager<sf::Texture>* m_resources;
