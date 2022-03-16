@@ -10,6 +10,7 @@ add_executable(${PROJECT_NAME}
     Tile.cpp
     ${PROJECT_SOURCE_DIR}/include/Managers/Manager.hpp
     ${MANAGER_DIRS}/SceneManager.cpp
+    ${MANAGER_DIRS}/TileSheetManager.cpp
     ${MANAGER_DIRS}/TileManager.cpp
     ${MANAGER_DIRS}/AnimationManager.cpp
     ${TOOLS_DIRS}/TextureHelper.cpp

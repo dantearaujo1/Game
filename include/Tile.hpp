@@ -16,15 +16,7 @@ enum class TILETYPE{
   GRASS,
   ICE,
 };
-std::map<TILETYPE,const std::string> tileTypeMap = {
-  { TILETYPE::NONE,"None" },
-  { TILETYPE::WALL,"Wall" },
-  { TILETYPE::FLOOR,"Floor" },
-  { TILETYPE::WATER,"Water" },
-  { TILETYPE::SAND,"Sand" },
-  { TILETYPE::GRASS,"Grass" },
-  { TILETYPE::ICE,"Ice" },
-};
+
 
 
 class Tile{

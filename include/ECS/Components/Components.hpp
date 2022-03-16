@@ -32,7 +32,7 @@ struct SpriteComponent {
   sf::Sprite sprite;
   sf::Texture* spriteTexture{nullptr};
   sf::IntRect currentFrame;
-  PositionComponent* position;
+  // PositionComponent* position;
   SpriteComponent() = default;
 };
 

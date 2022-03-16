@@ -1,0 +1,22 @@
+
+[ ] - TODO: Create a file system for storing maps and animations
+[X] - TODO: Suport Tiled Map files 15/032022 15:43
+[ ] - TODO: Integrate Render System with RenderingTiles
+[ ] - TODO: Create an Render Order for Objects and Tiles;
+[ ] - TODO: Create a Collision System;
+[X] - TODO: GUI Debug with IMGUI
+
+
+== INFO ==
+
+*TileManager Class is responsible for rendering and storing Tiles for now
+*GameScene is more like an World, i think we should make a separate class for this
+*Need a way to integrate our Rendering System with our TileManager Class
+
+
+== GUI INFO ==
+
+* We should edit our map tile in runtime, need to know the layer to edit and the tile
+* ImGui being drawn in GameScene class
+* What info should we see in ImGui?
+

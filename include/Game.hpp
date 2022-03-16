@@ -18,6 +18,7 @@ public:
   void run();
   bool isDebugActivated() const { return m_debug; }
   void setDebug(bool tf) { m_debug = tf; }
+  Manager* getDirector() { return m_sceneManager; }
 
 private:
   void handleInput();

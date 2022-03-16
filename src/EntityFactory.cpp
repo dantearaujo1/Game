@@ -20,7 +20,7 @@ entt::entity EntityFactory::createPlayer(int id){
   cmovement.velx = 0;
   cmovement.vely = 0;
 
-  scomponent.position = &cposition;
+  // scomponent.position = &cposition;
   scomponent.sprite.setTexture(*m_director->getTexture("child"));
   scomponent.sprite.setTextureRect(sf::IntRect(2 * 32, 1 * 64, 32, 64));
   scomponent.sprite.setPosition(cposition.x, cposition.y);

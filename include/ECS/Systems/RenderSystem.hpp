@@ -11,4 +11,5 @@ class RenderSystem : CSystem {
     bool init();
     void update(float dt, float ups);
     void render(sf::RenderWindow& window);
+
 };

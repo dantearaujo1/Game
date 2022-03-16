@@ -21,6 +21,7 @@ public:
   ~GameScene();
 
   bool init();
+  bool loadMap();
   bool loadAnimations();
   void handleInput(sf::Event e);
   void render(sf::RenderWindow &window);
