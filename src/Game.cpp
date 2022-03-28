@@ -40,8 +40,8 @@ void Game::render() {
   // Render Scenes
   m_sceneManager->render(m_window);
 
+
   // Render ImGUI after everything
-  // m_gui.render();
     ImGui::SFML::Render(m_window);
 
   // Clear screen
@@ -51,7 +51,6 @@ void Game::render() {
 
 void Game::update(float dt, float target_FPS) {
 
-  dt = dt * target_FPS;
   m_sceneManager->update(dt, target_FPS);
 }
 
@@ -75,12 +74,30 @@ void Game::run() {
     handleInput();
 
     while (accumulator > ups) {
-      update(ups.asSeconds(), TARGET_UPS);
       accumulator -= ups;
+      update(ups.asSeconds(), TARGET_UPS);
     }
     // ImGUI must be updated everytime
-    ImGui::SFML::Update(m_window, m_deltaTime);
+    ImGui::SFML::Update(m_window, ups);
     render();
+
+    //TESTING
+    // static float x = 98;
+    // static float z = 200;
+    // static float duration = 10.0f;
+    // static float elapsed = 0.0f;
+    //
+    // float lerp = x + (z - x) * elapsed/duration;
+    // elapsed += ups.asSeconds();
+    // if (elapsed > duration){lerp = z;}
+    //
+    // sf::RectangleShape shape{sf::Vector2f(32,32)};
+    // shape.setPosition( lerp,0);
+    // shape.setFillColor(sf::Color::White);
+    // std::cout << "Lerp: " << lerp << " X: " << x << " Elapsed: " << elapsed << std::endl;
+    // std::cout << "DeltaTime: " << ups.asSeconds() << std::endl;
+    // m_window.clear(sf::Color::Black);
+    // m_window.draw(shape);
   }
   ImGui::SFML::Shutdown();
 }

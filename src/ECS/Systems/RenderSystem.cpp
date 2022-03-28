@@ -1,4 +1,5 @@
 #include "../../../include/ECS/Systems/RenderSystem.hpp"
+#include <iostream>
 
 bool RenderSystem::init() {
   // m_tileManager.init(nullptr);
@@ -15,8 +16,8 @@ void RenderSystem::update(float dt, float ups) {
     auto &sprite = spriteComponent.sprite;
     auto &position = view.get<PositionComponent>(entity);
 
-    if(!position){return;}
-    sprite.setPosition(position->x,position->y);
+    // if(!position){return;}
+    sprite.setPosition(position.x,position.y);
 
   }
 

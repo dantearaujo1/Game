@@ -74,7 +74,7 @@ bool TileManager::setTileTexture(int index, const sf::Texture &texture, int laye
   return true;
 }
 
-void TileManager::update(float dt, float ups) {
+void TileManager::update(float dt, float ups){
   for (auto &layer : m_tiles) {
     for (auto& tile: layer){
       tile->update(dt, ups);
@@ -100,18 +100,24 @@ void TileManager::render(sf::RenderWindow &window) {
   }
 }
 void TileManager::renderAfter(sf::RenderWindow &window){
+
+    //Drawing tiles after Player
     for(int i = 4; i < m_tiles.size(); i++){
       for (auto& tiles : m_tiles[i]){
         tiles->draw(window);
-        if (m_app->isDebugActivated()) {
-          sf::RectangleShape debugTile;
-          debugTile.setPosition(tiles->getPosition());
-          debugTile.setFillColor(sf::Color::Transparent);
-          debugTile.setOutlineColor(sf::Color::Red);
-          debugTile.setOutlineThickness(1);
-          debugTile.setSize(sf::Vector2f(m_map->GetTileWidth(),m_map->GetTileHeight()));
-          window.draw(debugTile);
-        }
+      }
+    }
+    //DEBUGGIN
+    for (auto& tiles : m_tiles[0]){
+      // tiles->draw(window);
+      if (m_app->isDebugActivated()) {
+        sf::RectangleShape debugTile;
+        debugTile.setPosition(tiles->getPosition());
+        debugTile.setFillColor(sf::Color::Transparent);
+        debugTile.setOutlineColor(sf::Color::Red);
+        debugTile.setOutlineThickness(1);
+        debugTile.setSize(sf::Vector2f(m_map->GetTileWidth(),m_map->GetTileHeight()));
+        window.draw(debugTile);
       }
     }
 

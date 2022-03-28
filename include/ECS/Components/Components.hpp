@@ -8,17 +8,20 @@
 #include "../../Animation.hpp"
 
 struct PositionComponent {
-  int x{0};
-  int y{0};
-  PositionComponent(int x, int y) {
+  float x{0.0f};
+  float y{0.0f};
+  PositionComponent(float x, float y) {
     this->x = x;
     this->y = y;
   }
 };
 
 struct MovementComponent {
-  int velx{0};
-  int vely{0};
+  float velx{0.0f};
+  float vely{0.0f};
+  float delay{.2f};
+  float elapsedTime{0.0f};
+  bool isMoving{false};
   MovementComponent() = default;
 };
 

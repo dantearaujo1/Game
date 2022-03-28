@@ -10,7 +10,7 @@ EntityFactory::~EntityFactory()
 entt::entity EntityFactory::createPlayer(int id){
   const auto entity = m_ecs->create();
 
-  auto &cposition = m_ecs->emplace<PositionComponent>(entity, 400, 300);
+  auto &cposition = m_ecs->emplace<PositionComponent>(entity, 0, 0);
   auto &cstates = m_ecs->emplace<StateComponent>(entity);
   auto &cmovement = m_ecs->emplace<MovementComponent>(entity);
   auto &scomponent = m_ecs->emplace<SpriteComponent>(entity);

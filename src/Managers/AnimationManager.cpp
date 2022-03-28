@@ -67,7 +67,7 @@ void AnimationFactory::addFrames(const std::string& ID, int frames, int x, int y
   if(hasAnimation(ID)){
     for (int i = 0; i < frames; i++){
       FrameData* tempdata = new FrameData();
-      tempdata->duration =2.0f;
+      tempdata->duration =0.0416f;
       tempdata->id =ID;
       if (horizontal){
         tempdata->frame = sf::IntRect( x+width*i,y,width,height );

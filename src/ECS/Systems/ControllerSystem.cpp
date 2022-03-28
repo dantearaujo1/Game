@@ -32,33 +32,41 @@ void ControllerSystem::update(float dt, float ups){
 
       mov.velx = 0;
       mov.vely = 0;
+      float vel = 1.0f;
       states.status = StateComponent::STATUS::IDLE;
 
-      if (sf::Keyboard::isKeyPressed(con.keys["Left"])) {
-        mov.velx = -5;
+      if (sf::Keyboard::isKeyPressed(con.keys["Left"]) && !mov.isMoving) {
+        mov.velx = -vel;
+        mov.isMoving = true;
         states.facing = StateComponent::DIRECTION::EAST;
         states.status = StateComponent::STATUS::WALKING;
       }
-      if (sf::Keyboard::isKeyPressed(con.keys["Right"])) {
-        mov.velx = 5;
+      else if (sf::Keyboard::isKeyPressed(con.keys["Right"]) && !mov.isMoving) {
+        mov.velx = vel;
+        mov.isMoving = true;
         states.facing = StateComponent::DIRECTION::WEST;
         states.status = StateComponent::STATUS::WALKING;
       }
-      if (sf::Keyboard::isKeyPressed(con.keys["Up"])) {
-        mov.vely = -5;
+      else if (sf::Keyboard::isKeyPressed(con.keys["Up"]) && !mov.isMoving) {
+        mov.vely = -vel;
+        mov.isMoving = true;
         states.facing = StateComponent::DIRECTION::NORTH;
         states.status = StateComponent::STATUS::WALKING;
       }
-      if (sf::Keyboard::isKeyPressed(con.keys["Down"])) {
-        mov.vely = 5;
+      else if (sf::Keyboard::isKeyPressed(con.keys["Down"]) && !mov.isMoving) {
+        mov.vely = vel;
+        mov.isMoving = true;
         states.facing = StateComponent::DIRECTION::SOUTH;
         states.status = StateComponent::STATUS::WALKING;
       }
-      if (sf::Keyboard::isKeyPressed(con.keys["Jump"])) {
-        mov.vely = 5;
+      else if (sf::Keyboard::isKeyPressed(con.keys["Jump"])) {
+        // mov.vely = vel;
         states.facing = StateComponent::DIRECTION::SOUTH;
         states.status = StateComponent::STATUS::JUMPING;
       }
+
     }
+
   }
+
 }
